@@ -1,1 +1,31 @@
-hello world!
+{% load static %}
+<div>
+    <ul>
+        {% if request.user.is_authenticated%}
+        <li>
+            <p>Hi, {{request.user.username}}</p>
+        </li>
+        <li>
+            <a href="{% url 'logout'%}">Log out</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'login'%}">Log in</a>
+        </li>
+        <li>
+            <a href="{% url 'signup'%}">Sign up</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+<div>
+    <a href="{% url 'make_post'%}">Make Post</a>
+</div>
+<div>
+    {% for post in object_list %}
+    <a href="{% url 'post' post.pk %}">
+        <img src="{{post.image}}" width=30%>
+    </a>
+    {%endfor%}
+</div>
