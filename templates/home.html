@@ -8,7 +8,7 @@
         <div class="card view-update {{ post.pk }}">
             <div class="card__panel-head">
                 <div class="poster__info">
-                    <a href="/">
+                    <a href="{% url 'profile' post.author.pk %}">
                         {% if post.author.profile_pic %}
                             <img class="poster__profilepic" src="{{post.author.profile_pic.url}}" alt="profile_picture">
                         {% endif %}

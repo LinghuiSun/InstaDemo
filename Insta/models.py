@@ -11,7 +11,21 @@ class InstaUser(AbstractUser):
         options={'quality': 100},
         blank=True,
         null=True,
-     )
+    )
+    def get_connections(self):
+        connections = UserConnection.objects.filter(creator=self)
+        return connections
+    def get_followers(self):
+        followers = UserConnection.objects.filter(following = self)
+        return followers
+    def is_followed_by(self, user):
+        followers = UserConnection.objects.filter(following = user)
+        return followers.filter(creator=self).exits()
+    def __str__(self):
+        return self.username
+    def get_absolute_url(self):
+        return reverse('profile', kwargs={'pk': self.pk})
+    
 
 class Post(models.Model):
     title = models.TextField(blank=True, null = True)
@@ -43,7 +57,7 @@ class Post(models.Model):
     def get_like_count(self):
         return self.likes.count()
     def get_comment_count(self):
-        return self.comments.count
+        return self.comments.count()
 
 
 
@@ -70,3 +84,17 @@ class Like(models.Model):
 
     def __str__(self):
         return 'Like: ' + self.user.username + ' likes ' + self.post.title
+
+class UserConnection(models.Model):
+    creator = models.ForeignKey(
+        InstaUser,
+        on_delete = models.CASCADE,
+        related_name="friendship_creator_set"
+    )
+    following = models.ForeignKey(
+        InstaUser,
+        on_delete = models.CASCADE,
+        related_name="friend_set"
+    )
+    def __str__(self):
+        return self.creator.username + ' follows '+ self.following.username
