@@ -81,7 +81,8 @@ class Comment(models.Model):
 class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes',)
     user = models.ForeignKey(InstaUser, on_delete=models.CASCADE)
-
+    class Meta:
+        unique_together = ("post", "user")
     def __str__(self):
         return 'Like: ' + self.user.username + ' likes ' + self.post.title
 

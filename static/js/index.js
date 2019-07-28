@@ -12,7 +12,7 @@ function error_cb(error) {
 function create_like(success_cb, error_cb) {
     var post_pk = $(this).siblings('.hidden-data').find('.post-pk').text();
     console.log(post_pk);
-
+    
     $.ajax({
         type: "POST",
         url: '/like',
@@ -22,13 +22,14 @@ function create_like(success_cb, error_cb) {
         success: function(data) { success_cb(data); },
         error: function(error) { error_cb(error); }
     });
+    
 }
   
 function like_update_view(data) {
     console.log(data);
-
+    
     // toggle heart
-    var $hiddenData = $('.hidden-data.' + data.post_pk);
+    var $hiddenData = $('.hidden-data');
     if (data.result) {
       $hiddenData.siblings('.submit-like').removeClass('fa-heart-o').addClass('fa-heart');
     } else {
@@ -40,8 +41,9 @@ function like_update_view(data) {
     var $post = $('.view-update.' + data.post_pk);
     var $likes = $post.find('.likes');
     var likes = parseInt($likes.text());
+    
     likes = likes + difference;
-  
+    
     console.log('likes', likes);
   
     if (likes == null || isNaN(likes)) {
@@ -72,8 +74,14 @@ function enterPressed(e) {
 }
    
 function validComment(text) {
-    if (text == '') return false;
-    return true;
+    var regu = "^[ ]+$";
+    var re = new RegExp(regu);
+    if (text == ''|| re.test(text)) {
+      return false;
+    } else {
+      return true;
+    }
+    
 }
   
 function create_comment(success_cb, error_cb) {
@@ -119,20 +127,21 @@ function comment_update_view(data) {
  *
  */
 
-function follow_user(success_cb, error_cb, type) {
+function follow_user(success_cb, error_cb, type){
     var follow_user_pk = $(this).attr('id');
     console.log(follow_user_pk);
-  
+
     $.ajax({
-      type: "POST",
+      type: 'POST',
       url: '/togglefollow',
       data: {
         follow_user_pk: follow_user_pk,
         type: type
       },
-      success: function(data) { success_cb(data); },
-      error: function(error) { error_cb(error); }
-    });
+      success: function(data) { success_cb(data);},
+      error: function(error) { error_cb(error);}
+
+   });
 }
   
 function update_follow_view(data) {
