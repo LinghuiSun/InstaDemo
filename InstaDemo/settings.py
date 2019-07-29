@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Insta',
     'imagekit',
-    'whitenoise.runserver-nostatic',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
