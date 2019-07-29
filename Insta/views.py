@@ -20,9 +20,10 @@ class PostlistView(LoginRequiredMixin, ListView):
         return Post.objects.filter(author__in = following)
 
 
-class PostdetailView(DetailView):
+class PostdetailView(LoginRequiredMixin,DetailView):
     model = Post
     template_name = 'post_detail.html'
+    login_url = 'login'
     # def get_context_data(self, **kwargs):
     #     data = super().get_context_data(**kwargs)
         
@@ -33,10 +34,14 @@ class PostdetailView(DetailView):
     #         data['liked'] = 0
     #     return data
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'make_post.html'
-    fields = '__all__'
+    fields = ['title', 'image']
+    login_url = 'login'
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 class PostUpdateView(UpdateView):
     model = Post
     template_name = 'update_post.html'

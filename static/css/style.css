@@ -579,3 +579,18 @@ a:hover {
   padding: 0; }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/* post-detail.html Eidt styles */
+.post-edit {
+  position: absolute;
+  top: 77px;
+  right: 24px;
+  width: 287px;
+  margin-top: 10px;
+}
+.post-edit .edit-text{
+  margin-left: 25%;
+  margin-top: 20px;
+  
+}

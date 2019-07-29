@@ -10,7 +10,15 @@
                 {% endif %}
                 {{ object.author.username }}
             </a>
+            
         </div>
+        {% if user == object.author %}
+        <div class="post-edit">    
+            <a href="{% url 'delete_post' post.pk %}" class="edit-text">Delete</a>
+            <a href="{% url 'update_post' post.pk %}" class="edit-text">Update</a>
+        </div>
+        {% endif %}
+        
         <div class="image__wrapper">
             <img class="card__main-image" src="http://{{ request.META.HTTP_HOST }}/{{object.image.url}}" width='1000', height='1000'>
         </div>

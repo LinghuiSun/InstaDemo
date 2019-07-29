@@ -5,6 +5,7 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    <p>Author: <span>{{request.user.username}}</span></p>
     <input type="submit" value="Save">
 </form>
 {% endblock content%}
